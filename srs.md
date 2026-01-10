@@ -136,3 +136,122 @@ System HRflow **NIE BĘDZIE** obejmował:
 | **Dodatki** | Diagram przypadków użycia, persony, kwestie do rozwiązania |
 
 ---
+
+## 2. Opis Ogólny
+
+### 2.1. Główne Funkcje Produktu
+
+System HRflow składa się z pięciu głównych modułów:
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                         HRflow                                   │
+├─────────────┬─────────────┬─────────────┬───────────┬───────────┤
+│  REKRUTACJA │  ONBOARDING │   ROZWÓJ    │ ANALITYKA │OFFBOARDING│
+├─────────────┼─────────────┼─────────────┼───────────┼───────────┤
+│• ATS        │• Dokumenty  │• LMS        │• Retention│• Odbieranie│
+│• Screening  │• E-podpis   │• OKR        │  AI       │  dostępów │
+│• Matching   │• Gamifikacja│• Feedback   │• Dashboardy│• Alumni   │
+│• Portal     │• Integracje │• 9-box      │• Ankiety  │           │
+│  Kandydata  │  dewelop.   │• Kafeteria  │           │           │
+│• Polecenia  │             │             │           │           │
+│• Social     │             │             │           │           │
+│  Media      │             │           │           │           │
+└─────────────┴─────────────┴─────────────┴───────────┴───────────┘
+```
+
+#### Moduł Rekrutacji
+
+| Funkcja | Opis |
+|---------|------|
+| **ATS (Applicant Tracking System)** | Zarządzanie procesem rekrutacyjnym, publikacja ofert, śledzenie kandydatów |
+| **Automatyczny Screening CV** | Parsowanie CV, ekstrakcja kompetencji, wstępna kwalifikacja |
+| **Semantic Matching Engine** | Inteligentne dopasowanie kandydatów do ofert z rozpoznawaniem hierarchii kompetencji |
+| **Portal Kandydata** | Interfejs dla kandydatów z real-time tracking statusu aplikacji |
+| **Giełda Talentów** | Dopasowanie obecnych pracowników do wewnętrznych wakatów |
+| **Employee Referral Engine** | System poleceń z gamifikacją i automatycznym naliczaniem nagród |
+| **Anonimizacja D&I** | Maskowanie danych wrażliwych w procesie selekcji |
+| **Auto-publikacja Social Media** | Automatyczne publikowanie ofert na LinkedIn, Facebook, Instagram |
+| **Integracja z kalendarzami** | Automatyczne umawianie spotkań rekrutacyjnych |
+
+#### Moduł Onboardingu
+
+| Funkcja | Opis |
+|---------|------|
+| **Cyfrowy obieg dokumentów** | Elektroniczne formularze, workflow zatwierdzeń |
+| **E-podpis** | Podpisywanie umów i dokumentów elektronicznie |
+| **Generator umów** | Automatyczne generowanie umów na podstawie szablonów |
+| **Moduł wdrożeniowy** | Zgrywalizowany onboarding z śledzeniem postępów |
+| **Integracje deweloperskie** | Połączenie z repozytoriami kodu, Confluence, Jira |
+
+#### Moduł Rozwoju i Szkoleń
+
+| Funkcja | Opis |
+|---------|------|
+| **LMS** | Platforma e-learningowa ze ścieżkami rozwoju |
+| **System OKR** | Kaskadowanie celów, powiązanie z strategią firmy |
+| **Continuous Feedback** | Ciągła wymiana opinii peer-to-peer |
+| **9-box grid** | Ocena potencjału i planowanie sukcesji |
+| **Kafeteria benefitowa** | Elastyczna wymiana punktów na benefity |
+
+#### Moduł Analityki HR
+
+| Funkcja | Opis |
+|---------|------|
+| **Retention AI** | Predykcja ryzyka odejścia pracowników |
+| **Dashboardy** | Wizualizacja kluczowych metryk HR |
+| **Ankiety pulsujące** | Regularne badanie nastrojów pracowników |
+| **Raportowanie** | Generowanie raportów dla zarządu |
+
+#### Moduł Offboardingu
+
+| Funkcja | Opis |
+|---------|------|
+| **Zarządzanie dostępami** | Automatyczne odbieranie dostępów przez AD/LDAP |
+| **Program Alumni** | Portal dla byłych pracowników, networking |
+
+### 2.2. Klasy Użytkowników
+
+System rozróżnia następujące role użytkowników:
+
+#### Użytkownicy zewnętrzni
+
+| Rola | Opis | Dostęp do modułów |
+|------|------|-------------------|
+| **Kandydat** | Osoba aplikująca na stanowisko | Portal Kandydata |
+| **Alumni** | Były pracownik w programie Alumni | Moduł Alumni |
+
+#### Użytkownicy wewnętrzni
+
+| Rola | Opis | Dostęp do modułów |
+|------|------|-------------------|
+| **Rekruter** | Prowadzi procesy rekrutacyjne | Rekrutacja (pełny), Analityka (częściowy) |
+| **HR Manager** | Zarządza działem HR, definiuje procesy | Wszystkie moduły |
+| **HR Admin** | Obsługa dokumentacji kadrowej | Onboarding, Offboarding, Dokumenty |
+| **Pracownik** | Standardowy użytkownik systemu | Rozwój, Feedback, Kafeteria, OKR |
+| **Menedżer** | Kierownik zespołu | Rekrutacja (hiring manager), Rozwój, Feedback, OKR, Analityka (swój zespół) |
+| **Trener wewnętrzny** | Tworzy i prowadzi szkolenia | LMS (tworzenie treści) |
+| **Administrator IT** | Zarządza integracjami i konfiguracją | Panel administracyjny, integracje |
+| **Zarząd** | Dostęp do strategicznych raportów | Analityka, Dashboardy |
+
+#### Skrócone persony (pełne w Dodatku B)
+
+**Anna - Rekruterka (28 lat)**
+> *"Każdego dnia przeglądam setki CV. Potrzebuję narzędzia, które odsieje tych, którzy kompletnie nie pasują, ale nie przegapi diamentów ukrytych w niestandardowych CV."*
+
+Anna pracuje w firmie IT od 2 lat. Prowadzi jednocześnie 8-12 procesów rekrutacyjnych. Jej główny ból to czas poświęcany na wstępną selekcję CV i koordynację terminów rozmów.
+
+**Marek - Nowy programista (25 lat)**
+> *"Pierwszy tydzień w nowej pracy to chaos. Loginy, hasła, dokumenty, spotkania... Chciałbym mieć jedno miejsce, gdzie wszystko jest ogarnięte."*
+
+Marek właśnie dołączył do zespołu backend. Potrzebuje szybko wdrożyć się w projekt i poznać procesy firmy. Lubi gamifikację i jasne cele.
+
+**Katarzyna - HR Manager (42 lata)**
+> *"Zarząd pyta mnie o rotację, koszty rekrutacji, development pipeline... Zbieranie tych danych z Exceli to koszmar."*
+
+Katarzyna zarządza 5-osobowym zespołem HR w firmie produkcyjnej (400 pracowników). Potrzebuje narzędzi analitycznych i automatyzacji procesów.
+
+**Tomek - Menedżer zespołu (35 lat)**
+> *"Chcę wiedzieć, kto w moim zespole ma potencjał na lidera, a kto może odejść. I chcę to wiedzieć zanim będzie za późno."*
+
+Tomek zarządza 12-osobowym zespołem sprzedaży. Potrzebuje prostych narzędzi do oceny i rozwoju ludzi.
