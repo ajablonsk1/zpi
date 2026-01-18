@@ -68,7 +68,7 @@ System HRflow obejmuje następujące obszary:
 
 **Moduł Offboardingu:**
 
-- Automatyczne odbieranie dostępów (integracja z AD/LDAP)
+- Automatyczne odbieranie dostępów (integracja z SAML)
 - Program Alumni dla byłych pracowników
 
 #### Cele biznesowe i KPI
@@ -114,7 +114,7 @@ System HRflow **NIE BĘDZIE** obejmował:
 | **9-box grid**               | Macierz oceny pracowników (potencjał vs. wydajność)                          |
 | **OKR**                      | Objectives and Key Results - metodyka zarządzania przez cele                 |
 | **LMS**                      | Learning Management System - platforma e-learningowa                         |
-| **AD/LDAP**                  | Active Directory / Lightweight Directory Access Protocol                     |
+| **SAML**                     | Security Assertion Markup Language                                           |
 | **Giełda Talentów**          | Internal Talent Marketplace - system dopasowania pracowników do wakatów      |
 | **Retention AI**             | Moduł predykcji ryzyka odejścia pracownika                                   |
 | **Employee Referral Engine** | System poleceń pracowniczych                                                 |
@@ -207,7 +207,7 @@ System HRflow składa się z pięciu głównych modułów:
 
 | Funkcja                   | Opis                                            |
 |---------------------------|-------------------------------------------------|
-| **Zarządzanie dostępami** | Automatyczne odbieranie dostępów przez AD/LDAP  |
+| **Zarządzanie dostępami** | Automatyczne odbieranie dostępów przez SAML     |
 | **Program Alumni**        | Portal dla byłych pracowników, networking       |
 
 ### 2.2. Klasy Użytkowników
@@ -332,7 +332,7 @@ Tomek zarządza 12-osobowym zespołem sprzedaży. Potrzebuje prostych narzędzi 
 | **ZZ-01** | API LinkedIn do publikacji ofert           | Ręczna publikacja                     |
 | **ZZ-02** | Dostawca e-podpisu (np. Autenti, DocuSign) | Podpis offline + skan                 |
 | **ZZ-03** | Serwer SMTP do wysyłki maili               | Zewnętrzny serwis (SendGrid, Mailgun) |
-| **ZZ-04** | Active Directory / LDAP firmy              | Lokalne konta w systemie              |
+| **ZZ-04** | SAML                                       | Lokalne konta w systemie              |
 | **ZZ-05** | System kalendarzowy (Google/Outlook)       | Manualnie uzgadniane terminy          |
 
 ---
@@ -524,7 +524,7 @@ System HRflow integruje się z następującymi systemami zewnętrznymi:
 
 | System | Typ integracji | Cel | Protokół |
 |--------|----------------|-----|----------|
-| **Active Directory / LDAP** | Outbound | SSO, zarządzanie dostępami | LDAP/LDAPS |
+| **SAML** | Outbound | SSO, zarządzanie dostępami | SAML |
 | **SMTP Server** | Outbound | Wysyłka powiadomień email | SMTP/TLS |
 | **Google Calendar / Outlook 365** | Bidirectional | Umawianie spotkań rekrutacyjnych | OAuth2 + REST API |
 | **Dostawca e-podpisu** | Outbound | Podpisywanie umów | REST API (webhook) |
@@ -609,28 +609,45 @@ Pobranie statusu aplikacji
 #### Integracja z Active Directory
 
 ```yaml
-# Konfiguracja LDAP
-ldap:
-  server: ldap://ad.company.local
-  port: 636
-  use_ssl: true
-  bind_dn: cn=hrflow-service,ou=ServiceAccounts,dc=company,dc=local
-  base_dn: ou=Users,dc=company,dc=local
+# Konfiguracja SAML
+saml:
+  enabled: true
   
-  # Mapowanie atrybutów
-  attribute_mapping:
-    username: sAMAccountName
-    email: mail
-    first_name: givenName
-    last_name: sn
-    department: department
-    manager: manager
+  # Konfiguracja Dostawcy Tożsamości (Identity Provider - IdP)
+  idp:
+    # URL metadanych IdP (np. ADFS, Azure AD, Okta)
+    entity_id: "http://adfs.company.local/adfs/services/trust"
+    sso_url: "https://adfs.company.local/adfs/ls/"
+    # Certyfikat publiczny IdP (niezbędny do weryfikacji podpisu)
+    x509_cert: |
+      MIID... (tutaj wklejasz treść certyfikatu od dostawcy) ...
+    
+  # Konfiguracja Aplikacji (Service Provider - SP)
+  sp:
+    entity_id: "https://hrflow.company.local/saml/metadata"
+    assertion_consumer_service_url: "https://hrflow.company.local/saml/acs"
 
-  # Synchronizacja grup
+  # Mapowanie atrybutów (SAML Claims)
+  # W SAML atrybuty często są pełnymi adresami URI (szczególnie w ADFS/Azure)
+  attribute_mapping:
+    username: "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"  # odpowiednik sAMAccountName
+    email: "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"
+    first_name: "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname"
+    last_name: "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname"
+    department: "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/department" # lub nazwa własna
+    manager: "http://schemas.company.local/claims/manager" # atrybut niestandardowy
+
+  # Mapowanie ról/grup
   group_sync:
     enabled: true
-    hrflow_admins: CN=HRFlow-Admins,OU=Groups,DC=company,DC=local
-    hrflow_managers: CN=HRFlow-Managers,OU=Groups,DC=company,DC=local
+    # Nazwa atrybutu w tokenie SAML, który przechowuje grupy użytkownika
+    group_attribute: "http://schemas.microsoft.com/ws/2008/06/identity/claims/groups"
+    # Mapowanie wartości z tokenu SAML na role w aplikacji
+    role_mapping:
+      # W SAML zazwyczaj przesyła się samą nazwę grupy (CN) lub jej ID, a nie pełne DN
+      hrflow_admins: "HRFlow-Admins"
+      hrflow_managers: "HRFlow-Managers"
+
 ```
 
 #### Integracja z kalendarzem (Google Calendar)
@@ -1451,7 +1468,7 @@ def schedule_interview(candidate_email, recruiter_email, datetime_utc, duration_
 **Warunki Wstępne:**
 
 - Pracownik ma zakończoną umowę (data końca zatrudnienia)
-- Skonfigurowana integracja z AD/LDAP i innymi systemami
+- Skonfigurowana integracja z SAML i innymi systemami
 
 **Warunki Końcowe:**
 
@@ -2154,7 +2171,7 @@ Lista pytań i niejasności które pojawiły się w trakcie analizy i wymagają 
 | **KT-01** | Jaki provider e-podpisu? Autenti vs DocuSign vs Signaturit | Autenti (polski, tańszy, RODO) | Do decyzji | Tech Lead |
 | **KT-02** | Jak trenować model Semantic Matching bez danych historycznych? | Pre-trained embeddings (BERT) + fine-tuning na publicznych datasetsach | Do prototypu | ML Engineer |
 | **KT-03** | Self-hosted Elasticsearch vs managed (Elastic Cloud)? | Managed dla MVP (szybciej), self-hosted jeśli koszty za wysokie | Do decyzji | Tech Lead |
-| **KT-04** | Jak obsługiwać integrację z różnymi wersjami AD/LDAP? | Abstraction layer + konfigurowalne mapowanie atrybutów | Do implementacji | Backend |
+| **KT-04** | Jak obsługiwać integrację z różnymi wersjami SAML? | Abstraction layer + konfigurowalne mapowanie atrybutów | Do implementacji | Backend |
 | **KT-05** | Czy model Retention AI wymaga GPU? | CPU wystarczy dla inference, GPU do treningu (sporadycznie) | Zdecydowane | ML Engineer |
 
 #### Kwestie UX/Design
