@@ -297,6 +297,29 @@ System oblicza score dopasowania (0-100%) kandydata do oferty na podstawie spars
 | **Priorytet** | High |
 | **Story Points** | 8 |
 
+**Opis wymagań:**
+Rekruter ma możliwość tworzenia nowych ofert pracy za pomocą kreatora. Może zdefiniować: tytuł, poziom stanowiska, widełki płacowe, lokalizację (remote/hybrid/office), opis stanowiska (rich text), oraz wymagane i mile widziane kompetencje (zintegrowane z silnikiem matchingu). Oferta może zostać zapisana jako szkic lub natychmiast opublikowana.
+
+**User Story:**
+> Jako rekruter, chcę szybko tworzyć i publikować atrakcyjne wizualnie oferty pracy, aby przyciągnąć najlepszych kandydatów.
+
+**Kryteria Akceptacji:**
+
+- **Given:** Jestem zalogowany jako Rekruter i jestem w kreatorze oferty
+- **When:** Wypełniam formularz, definiuję wymagane kompetencje (np. Python > 3 lata) i klikam "Publikuj"
+- **Then:** Oferta otrzymuje status 'Opublikowana' i jest widoczna na Portalu Kandydata
+- **And:** Generowany jest unikalny link do oferty do udostępniania w social media
+- **And:** System podpowiada sugerowane kompetencje na podstawie tytułu stanowiska (np. dla "Python Dev" podpowiada "Django")
+
+**Refinement:**
+
+- *Techniczny:* Tabela `job_offers` z polami JSONB dla elastycznych atrybutów
+- *Techniczny:* Integracja z edytorem tekstu WYSIWYG (np. Quill.js lub TipTap)
+- *Techniczny:* Endpoint POST /api/v1/jobs z walidacją danych
+- *Techniczny:* Integracja z modułem kompetencji (współdzielony słownik)
+- *Organizacyjny:* Zdefiniowanie szablonów ofert dla najczęstszych stanowisk
+- *Organizacyjny:* Polityka widełek płacowych (czy są obowiązkowe?)
+
 ---
 
 #### STORY-7: Filtrowanie i wyszukiwanie kandydatów
@@ -418,6 +441,29 @@ System wysyła powiadomienia do kandydata przy każdej zmianie statusu aplikacji
 | **Tytuł** | Rejestracja i logowanie kandydata |
 | **Priorytet** | High |
 | **Story Points** | 5 |
+
+**Opis wymagań:**
+Kandydaci mogą założyć konto w Portalu Kandydata, aby aplikować na oferty, śledzić statusy i zarządzać swoimi danymi. System obsługuje rejestrację tradycyjną (Email/Hasło) oraz Social Login (Google, LinkedIn). Wymagane jest potwierdzenie adresu email oraz akceptacja regulaminu i zgód RODO.
+
+**User Story:**
+> Jako kandydat, chcę łatwo zalogować się do systemu (najlepiej jednym kliknięciem przez LinkedIn), aby nie tracić czasu na wypełnianie formularzy rejestracyjnych.
+
+**Kryteria Akceptacji:**
+
+- **Given:** Jestem nowym użytkownikiem na stronie głównej
+- **When:** Klikam "Zaloguj przez LinkedIn" i autoryzuję aplikację
+- **Then:** System tworzy dla mnie konto pobierając imię, nazwisko i zdjęcie z LinkedIn
+- **And:** Jestem zalogowany i przekierowany do dashboardu
+- **And:** Na mój adres email przychodzi powiadomienie powitalne
+
+**Refinement:**
+
+- *Techniczny:* Implementacja OAuth2 Client dla Google i LinkedIn
+- *Techniczny:* Bezpieczne przechowywanie haseł (Argon2 / bcrypt) dla logowania emailowego
+- *Techniczny:* Mechanizm sesji (JWT Access Token + Refresh Token w HttpOnly Cookie)
+- *Techniczny:* Obsługa flow "Zapomniałem hasła" ze zmianą przez link email
+- *Organizacyjny:* Rejestracja aplikacji w Google Console i LinkedIn Developers
+- *Organizacyjny:* Przygotowanie treści zgód i regulaminu (współpraca z prawnikiem)
 
 ---
 
@@ -698,9 +744,11 @@ Przy rozpoczęciu offboardingu system generuje checklistę zadań: zwrot sprzęt
 
 1. STORY-1: Parsowanie CV z ekstrakcją danych (8 SP)
 2. STORY-2: Scoring dopasowania kandydata (5 SP)
-3. STORY-9: Dashboard moich aplikacji (8 SP)
-4. STORY-10: Powiadomienia o zmianie statusu (8 SP)
-5. STORY-16: Podpisanie umowy elektronicznie (13 SP)
-6. STORY-17: Automatyczne generowanie umów (8 SP)
-7. STORY-22: Automatyczna dezaktywacja kont (13 SP)
-8. STORY-23: Lista kontrolna offboardingu (8 SP)
+3. STORY-6: Tworzenie i publikacja ofert pracy (8 SP)
+4. STORY-9: Dashboard moich aplikacji (8 SP)
+5. STORY-10: Powiadomienia o zmianie statusu (8 SP)
+6. STORY-13: Rejestracja i logowanie kandydata (5 SP)
+7. STORY-16: Podpisanie umowy elektronicznie (13 SP)
+8. STORY-17: Automatyczne generowanie umów (8 SP)
+9. STORY-22: Automatyczna dezaktywacja kont (13 SP)
+10. STORY-23: Lista kontrolna offboardingu (8 SP)
