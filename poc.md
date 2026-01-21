@@ -18,7 +18,24 @@ Gdzie:
 
 ---
 
-## 2. Backlog Sprintu 1
+---
+
+## 2. Planowanie Sprintu 1 (PoC)
+
+### 2.1 Cel Sprintu (Sprint Goal)
+**Cel:** Potwierdzić w ciągu 2 tygodni, że automatyczny scoring CV oparty na NLP osiąga trafność >80% względem oceny ludzkiej, aby zminimalizować ryzyko inwestycji w rozwój pełnego modułu ATS.
+
+### 2.2 Definition of Done (DoD)
+Kryteria ukończenia dla każdego zadania w sprincie:
+1. **Kod:** Przejrzysty, sformatowany (PEP8/ESLint), bez hardcodowanych sekretów.
+2. **Testy:** Testy jednostkowe napisane i przechodzące na zielono (min. 80% pokrycia dla core logiki).
+3. **Review:** Code Review zatwierdzone przez min. 1 inną osobę z zespołu.
+4. **Dokumentacja:** Zaktualizowana dokumentacja techniczna (README, Swagger).
+5. **Wdrożenie:** Funkcjonalność uruchomiona na środowisku developerskim (lub lokalnym w przypadku PoC).
+
+---
+
+## 3. Backlog Sprintu 1
 
 ### T1. Research: Analiza bibliotek NLP i ekstrakcji cech
 * **Priorytet:** Highest | **Estymacja:** 3 SP
