@@ -14,104 +14,104 @@
 
 ## Harmonogram szczegółowy
 
-### FAZA 1: Infrastruktura i Bezpieczeństwo
+### Moduł Rekrutacji - ATS i Screening CV
 
-**EPIC-5** | Tydzień 1-5 (20.01 - 21.02.2026)
-
-| Tydzień | Daty | Zakres prac |
-|---------|------|-------------|
-| T1 | 20-24.01.2026 | Setup projektu, repozytorium, CI/CD pipeline |
-| T2 | 27-31.01.2026 | Baza danych PostgreSQL, autentykacja JWT |
-| T3 | 03-07.02.2026 | RBAC, HTTPS/TLS, rate limiting |
-| T4 | 10-14.02.2026 | Szyfrowanie AES-256, audit logging |
-| T5 | 17-21.02.2026 | RODO (zgody, eksport, usunięcie), Redis, Elasticsearch |
-
-**Deliverables:**
-
-- ✅ Działający backend z autentykacją
-- ✅ Bezpieczna infrastruktura zgodna z RODO
-- ✅ Konteneryzacja Docker
-
----
-
-### FAZA 2: Moduł Rekrutacji - ATS i Screening CV
-
-**EPIC-1** | Tydzień 3-8 (03.02 - 14.03.2026)
+**EPIC-1** | Tydzień 1-6 (20.01 - 03.03.2026)
 
 | Tydzień | Daty | Zakres prac |
 |---------|------|-------------|
-| T3 | 03-07.02.2026 | Parsowanie CV (PDF/DOCX), ekstrakcja danych |
-| T4 | 10-14.02.2026 | Scoring dopasowania, obsługa błędów plików |
-| T5 | 17-21.02.2026 | Lista kandydatów z rankingiem |
-| T6 | 24-28.02.2026 | Tworzenie i publikacja ofert pracy |
-| T7 | 03-07.03.2026 | Filtrowanie, wyszukiwanie kandydatów |
-| T8 | 10-14.03.2026 | Kanban rekrutacyjny, testy integracyjne |
+| T1 | 20-24.01.2026 | Parsowanie CV (PDF/DOCX), ekstrakcja danych |
+| T2 | 27-31.01.2026 | Scoring dopasowania, obsługa błędów plików |
+| T3 | 03-07.02.2026 | Lista kandydatów z rankingiem |
+| T4 | 10-14.02.2026 | Tworzenie i publikacja ofert pracy |
+| T5 | 17-21.02.2026 | Filtrowanie, wyszukiwanie kandydatów |
+| T6 | 24-28.02.2026 | Kanban rekrutacyjny, testy integracyjne |
 
 **Deliverables:**
 
-- ✅ Automatyczny screening CV z parsowaniem
+- ✅ Automatyczny screening CV
 - ✅ Scoring dopasowania kandydatów
-- ✅ Panel rekrutera z zarządzaniem kandydatami
+- ✅ Panel rekrutera
 
 ---
 
-### FAZA 3: Portal Kandydata
+### Infrastruktura i Bezpieczeństwo
 
-**EPIC-2** | Tydzień 5-10 (17.02 - 28.03.2026)
+**EPIC-5** | Tydzień 3-12 (03.02 - 14.04.2026)
+
+| Tydzień | Daty | Zakres prac |
+|---------|------|-------------|
+| T3 | 03-07.02.2026 | Setup projektu, Baza danych PostgreSQL |
+| T4 | 10-14.02.2026 | Autentykacja JWT, RBAC |
+| T5 | 17-21.02.2026 | HTTPS/TLS, Rate limiting |
+| T6 | 24-28.02.2026 | Szyfrowanie danych (AES-256) |
+| T7 | 03-07.03.2026 | Audit logging |
+| T8 | 10-14.03.2026 | Mechanizmy RODO (zgody) |
+| T9 | 17-21.03.2026 | Eksport i usuwanie danych (RODO) |
+| T10 | 24-28.03.2026 | Redis Cache setup |
+| T11 | 31.03-04.04.2026 | Elasticsearch config |
+| T12 | 07-11.04.2026 | Konteneryzacja, Monitoring (finalizacja) |
+
+**Deliverables:**
+
+- ✅ Bezpieczna infrastruktura zgodna z RODO
+- ✅ Audytowalność i monitoring
+- ✅ Pełne środowisko produkcyjne
+
+---
+
+### Portal Kandydata
+
+**EPIC-2** | Tydzień 5-9 (17.02 - 17.03.2026)
 
 | Tydzień | Daty | Zakres prac |
 |---------|------|-------------|
 | T5 | 17-21.02.2026 | Rejestracja i logowanie kandydata |
 | T6 | 24-28.02.2026 | Profil kandydata, formularz aplikacji |
-| T7 | 03-07.03.2026 | Dashboard "Moje aplikacje" z timeline |
+| T7 | 03-07.03.2026 | Dashboard "Moje aplikacje" |
 | T8 | 10-14.03.2026 | Powiadomienia email + push |
-| T9 | 17-21.03.2026 | Automatyczny feedback, przypomnienia |
-| T10 | 24-28.03.2026 | Testy E2E, poprawki UX |
+| T9 | 17.03.2026 | Automatyczny feedback (Finish) |
 
 **Deliverables:**
 
-- ✅ Portal kandydata z real-time tracking
-- ✅ System powiadomień (email, push, in-app)
-- ✅ Automatyczny feedback
+- ✅ Portal kandydata z trackingiem
+- ✅ System powiadomień
 
 ---
 
-### FAZA 4: Cyfrowy Obieg Dokumentów i E-podpis
+### Cyfrowy Obieg Dokumentów (E-podpis)
 
-**EPIC-3** | Tydzień 7-11 (03.03 - 04.04.2026)
+**EPIC-3** | Tydzień 7-10 (03.03 - 31.03.2026)
 
 | Tydzień | Daty | Zakres prac |
 |---------|------|-------------|
 | T7 | 03-07.03.2026 | Integracja z Autenti API |
-| T8 | 10-14.03.2026 | Automatyczne generowanie umów z szablonów |
-| T9 | 17-21.03.2026 | Podpisywanie elektroniczne, workflow |
-| T10 | 24-28.03.2026 | Panel HR, archiwum dokumentów |
-| T11 | 31.03-04.04.2026 | Przypomnienia, wygasanie linków |
+| T8 | 10-14.03.2026 | Automatyczne generowanie umów |
+| T9 | 17-21.03.2026 | Workflow podpisywania |
+| T10 | 24-28.03.2026 | Panel HR, Archiwum |
 
 **Deliverables:**
 
-- ✅ E-podpis przez Autenti
-- ✅ Generator umów z szablonów
-- ✅ Archiwum cyfrowych dokumentów
+- ✅ E-podpis zintegrowany z Autenti
+- ✅ Generator umów
 
 ---
 
-### FAZA 5: Automatyczne Odbieranie Dostępów (Offboarding)
+### Offboarding
 
-**EPIC-4** | Tydzień 9-12 (17.03 - 11.04.2026)
+**EPIC-4** | Tydzień 9-12 (17.03 - 14.04.2026)
 
 | Tydzień | Daty | Zakres prac |
 |---------|------|-------------|
 | T9 | 17-21.03.2026 | Integracja z Active Directory |
-| T10 | 24-28.03.2026 | Automatyczna dezaktywacja kont (scheduler) |
-| T11 | 31.03-04.04.2026 | Checklist offboardingu, przypisywanie zadań |
-| T12 | 07-11.04.2026 | Exit interview, raporty, archiwizacja |
+| T10 | 24-28.03.2026 | Scheduler dezaktywacji kont |
+| T11 | 31.03-04.04.2026 | Checklist offboardingu |
+| T12 | 07-11.04.2026 | Exit interview, Raporty |
 
 **Deliverables:**
 
-- ✅ Automatyczne odbieranie dostępów AD/LDAP
-- ✅ Checklist offboardingu z tracking
-- ✅ Exit interview online
+- ✅ Automatyczne odbieranie dostępów
+- ✅ Proces offboardingu
 
 ---
 
@@ -119,12 +119,10 @@
 
 | Data | Milestone | Opis |
 |------|-----------|------|
-| **21.02.2026** | 🏁 M1: Infrastruktura Ready | Backend gotowy, autentykacja, bezpieczeństwo |
-| **14.03.2026** | 🏁 M2: ATS MVP | Działający moduł rekrutacji ze screeningiem CV |
-| **28.03.2026** | 🏁 M3: Portal Kandydata Live | Portal z trackingiem i powiadomieniami |
-| **04.04.2026** | 🏁 M4: E-podpis Operacyjny | Cyfrowy obieg dokumentów z e-podpisem |
-| **11.04.2026** | 🏁 M5: MVP Complete | Pełny offboarding, system gotowy do pilotażu |
-
+| **03.03.2026** | 🏁 M1: Rekrutacja MVP | Działający ATS ze scoringiem (PoC integrated) |
+| **17.03.2026** | 🏁 M2: Portal Kandydata Live | Portal dostępny dla kandydatów |
+| **31.03.2026** | 🏁 M3: E-podpis Ready | Cyfrowy obieg umów działający |
+| **14.04.2026** | 🏁 M4: Project Complete | Pełna infrastruktura, Offboarding, System gotowy |
 ---
 
 ## Zależności między Epikami
@@ -155,9 +153,10 @@
 
 **Opis zależności:**
 
-- **EPIC-5 → wszystkie** - Infrastruktura musi być gotowa przed rozpoczęciem innych modułów
-- **EPIC-1 → EPIC-2** - Portal Kandydata wymaga działającego ATS (statusy, oferty)
-- **EPIC-1 → EPIC-3** - Obieg dokumentów wymaga danych kandydatów z rekrutacji
+- **EPIC-1 (Rekrutacja)** - Startuje jako pierwszy (PoC).
+- **EPIC-5 (Infrastruktura)** - Rozwija się równolegle, wspierając kolejne moduły.
+- **EPIC-1 → EPIC-2** - Portal Kandydata wymaga ofert z ATS.
+- **EPIC-1 → EPIC-3** - Obieg dokumentów wymaga kandydatów z ATS.
 
 ---
 

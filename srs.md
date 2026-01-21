@@ -1552,7 +1552,7 @@ def schedule_interview(candidate_email, recruiter_email, datetime_utc, duration_
 | ID | Funkcjonalność | Must | Should | Could | Won't (MVP) |
 |----|----------------|------|--------|-------|-------------|
 | WF-REK-001 | Automatyczny Screening CV | ✓ | | | |
-| WF-REK-002 | Semantic Matching Engine | | ✓ | | |
+| WF-REK-002 | Semantic Matching Engine | ✓ | | | |
 | WF-REK-003 | Portal Kandydata z tracking | ✓ | | | |
 | WF-REK-004 | Giełda Talentów | | | ✓ | |
 | WF-REK-005 | System Poleceń Pracowniczych | | ✓ | | |
@@ -1573,13 +1573,13 @@ def schedule_interview(candidate_email, recruiter_email, datetime_utc, duration_
 **Must Have (MVP):**
 
 - **Screening CV** - bez tego system nie ma sensu, to core funkcjonalność
+- **Semantic Matching Engine** - kluczowy wyróżnik (USP) i cel PoC
 - **Portal Kandydata** - kluczowe dla Candidate Experience (cel: cNPS +50)
 - **Cyfrowy obieg dokumentów** - bezpośrednio wpływa na cel redukcji czasu kadr o 80%
 - **Odbieranie dostępów** - krytyczne dla bezpieczeństwa, zero tolerancji na błędy
 
 **Should Have (v1.1):**
 
-- **Semantic Matching** - zwiększa wartość screeningu, ale wymaga danych do treningu
 - **System poleceń** - ważny cel biznesowy, ale firma może funkcjonować bez niego
 - **Gamifikowany onboarding** - wpływa na Time-to-Productivity, ale można zacząć od prostszej wersji
 - **LMS** - ważne dla rozwoju, ale można początkowo używać zewnętrznych platform
